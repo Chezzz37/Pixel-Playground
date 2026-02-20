@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game Site Template - Home</title>
+    <!-- Import Google Fonts: Bungee, Fredoka One, Nosifer, Black Ops One, Audiowide, Bubblegum Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Black+Ops+One&family=Bungee&family=Bubblegum+Sans&family=Fredoka+One&family=Nosifer&display=swap" rel="stylesheet" />
+    <style>
+        /* Pixelify font from local/alternative CDN (better workaround with public font) */
+        @font-face {
+            font-family: 'Pixelify';
+            src: url('https://files.florian-rappl.de/pixelify/Pixellari.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Bungee', sans-serif;
+            background-color: #000;
+            color: #000; /* text color black globally (overridden) */
+            margin: 0;
+            padding-bottom: 60px;
+            text-align: center;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        /* Override text color to white except where specified */
+        main, header h1, .popup-menu a, .popup-menu button,
+        .nav-item {
+            color: #fff;
+        }
+
+        /* Boxes with 50% opacity background for text content */
+        main > div.page-content {
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 8px;
+        }
+
+        body.background-image-mode {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #000;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 2rem;
+            user-select: none;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        .bottom-nav {
+            background-color: #000;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(255, 165, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            padding: 14px;
+            color: #FFA500;
+            text-decoration: none;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background-color: #FFA500;
+            color: #000;
+        }
+
+        .popup-menu {
+            display: none;
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            background-color: #000;
+            border: 2px solid #FFA500;
+            box-shadow: 0 4px 10px rgba(255, 165, 0, 0.7);
+            z-index: 10;
+            user-select: none;
+        }
+
+        .popup-menu.show {
+            display: block;
+        }
+
+        .popup-menu a,
+        .popup-menu button {
+            display: block;
+            color: #FFA500;
+            padding: 10px;
+            background: none;
+            border: none;
+            font-family: inherit;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .popup-menu a:hover,
+        .popup-menu button:hover {
+            background-color: #FFA500;
+            color: #000;
+        }
+
+        .popup-menu .close-btn {
+            background-color: #FF6347;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 1rem;
+        }
+
+        .page-content {
+            display: none;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            user-select: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        .settings-option {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #FFA500;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .settings-option label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        button, input[type="button"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
+            border: 1px solid #FFA500;
+            background-color: #FFA500;
+            color: #000;
+            cursor: pointer;
+            border-radius: 5px;
+            user-select: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+            background-color: #000;
+            color: #FFA500;
+            border-color: #000;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-top: 5px;
+            font-family: inherit;
+            border: 1px solid #FFA500;
+            background-color: #fff;
+            color: #000;
+            border-radius: 5px;
+            user-select: text;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #FF7F50;
+        }
+
+        /* Panic Button - moveable on top right, sized 50x50 */
+        #panic-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background-color: #FF6347;
+            color: #fff;
+            border: none;
+            padding: 0;
+            font-size: 1.5rem;
+            border-radius: 8px;
+            cursor: grab;
+            z-index: 1100;
+            user-select: none;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #panic-button:active {
+            cursor: grabbing;
+        }
+
+        .background-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .background-presets button {
+            padding: 0;
+            border: 2px solid #FFA500;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: transparent;
+            transition: border-color 0.3s;
+            user-select: none;
+        }
+
+        .background-presets button:hover,
+        .background-presets button:focus {
+            border-color: #FF7F50;
+            outline: none;
+        }
+
+        .background-presets img {
+            width: 100%;
+            height: 70px;
+            border-radius: 5px;
+            object-fit: cover;
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <header><h1>Game Zone</h1></header>
+
+    <!-- Panic Button -->
+    <button id="panic-button" title="Panic Button">!</button>
+
+    <main>
+        <div id="home-content" class="page-content active">
+            <p>Welcome to the Home Page!</p>
+        </div>
+
+        <div id="settings-content" class="page-content">
+            <h2 style="color:#fff;">Settings</h2>
+
+            <!-- Font selection -->
+            <div class="settings-option">
+                <label for="font-select">Change Font:</label>
+                <select id="font-select" aria-label="Font selection">
+                    <option value="'Bungee', sans-serif">Bungee</option>
+                    <option value="'Pixelify', sans-serif">Pixelify</option>
+                    <option value="'Fredoka One', cursive">Fredoka One</option>
+                    <option value="'Nosifer', cursive">Nosifer</option>
+                    <option value="'Black Ops One', cursive">Black Ops One</option>
+                    <option value="'Audiowide', cursive">Audiowide</option>
+                    <option value="'Bubblegum Sans', cursive">Bubblegum Sans</option>
+                </select>
+            </div>
+
+            <!-- Font size setting -->
+            <div class="settings-option">
+                <label for="font-size-select">Font Size:</label>
+                <select id="font-size-select" aria-label="Font size selection">
+                    <option value="14px">Small (14px)</option>
+                    <option value="16px" selected>Normal (16px)</option>
+                    <option value="18px">Large (18px)</option>
+                    <option value="20px">Extra Large (20px)</option>
+                    <option value="24px">Huge (24px)</option>
+                </select>
+            </div>
+
+            <div class="settings-option">
+                <label for="text-color-picker">Change Text Color:</label>
+                <input type="color" id="text-color-picker" value="#ffffff" />
+            </div>
+
+            <div class="settings-option">
+                <label for="background-image-url">Background Image URL:</label>
+                <input type="text" id="background-image-url" placeholder="Enter image URL (e.g., https://picsum.photos)" />
+            </div>
+
+            <div class="settings-option">
+                <label>Preset Backgrounds:</label>
+                <div class="background-presets">
+                    <button type="button" aria-label="Preset 1" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif" alt="Preset 1" />
+                    </button>
+                    <button type="button" aria-label="Preset 2" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/54QEU276ZTIKU47PLYSXEL365PDJR5JM.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/54QEU276ZTIKU47PLYSXEL365PDJR5JM.gif" alt="Preset 2" />
+                    </button>
+                    <button type="button" aria-label="Preset 3" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/LN7OVZGYW4IX4OFUQ2JTV5BCFOTHAWFW.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/LN7OVZGYW4IX4OFUQ2JTV5BCFOTHAWFW.gif" alt="Preset 3" />
+                    </button>
+                    <button type="button" aria-label="Preset 4" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif" alt="Preset 4" />
+                    </button>
+                    <button type="button" aria-label="Preset 5" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/77ASGVD3JJCPIOMTWBW7BTZXYBYVLAFJ.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/77ASGVD3JJCPIOMTWBW7BTZXYBYVLAFJ.gif" alt="Preset 5" />
+                    </button>
+                    <button type="button" aria-label="Preset 6" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/GR7IT7SXLL423JV2INXR36IZLNESA42X.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/GR7IT7SXLL423JV2INXR36IZLNESA42X.gif" alt="Preset 6" />
+                    </button>
+                    <button type="button" aria-label="Preset 7" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif" alt="Preset 7" />
+                    </button>
+                    <button type="button" aria-label="Preset 8" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/ZW67MZRWGUGQJVA2P6XD46WLO4UC53HL.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/ZW67MZRWGUGQJVA2P6XD46WLO4UC53HL.gif" alt="Preset 8" />
+                    </button>
+                    <button type="button" aria-label="Preset 9" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif')">
+                      <img src="https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif" alt="Preset 9" />
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-option">
+                <label for="panic-color-picker">Change Panic Button Color:</label>
+                <input type="color" id="panic-color-picker" value="#FF6347" />
+            </div>
+
+            <div class="settings-option">
+                <label for="panic-url">Panic Button URL:</label>
+                <input type="text" id="panic-url" placeholder="Enter URL to open (default: https://example.com)" />
+            </div>
+
+            <div class="settings-option">
+                <label for="hotkey-input">Panic Button Hotkey (e.g. Shift+P):</label>
+                <input type="text" id="hotkey-input" placeholder="Enter hotkey (e.g., Shift+P)" />
+                <small style="color:#aaa;">Format: Ctrl, Shift, Alt + Key</small>
+            </div>
+            
+            <div class="settings-option">
+                <label for="button-color-picker">Change Buttons Color:</label>
+                <input type="color" id="button-color-picker" value="#FFA500" />
+            </div>
+
+            <div class="settings-option">
+                <label for="button-border-color-picker">Change Button Border Color:</label>
+                <input type="color" id="button-border-color-picker" value="#FFA500" />
+            </div>
+
+            <div class="settings-option">
+                <label for="button-border-size-select">Change Button Border Size:</label>
+                <select id="button-border-size-select" aria-label="Button border size">
+                    <option value="1px">1px (Thin)</option>
+                    <option value="2px" selected>2px (Default)</option>
+                    <option value="3px">3px (Medium)</option>
+                    <option value="4px">4px (Thick)</option>
+                    <option value="5px">5px (Extra Thick)</option>
+                </select>
+            </div>
+
+            <div class="settings-option">
+                <button onclick="applyAppearanceSettings()" class="save-btn">Save Appearance Settings</button>
+            </div>
+
+            <button onclick="alert('Settings Saved!')">Save All Settings</button>
+            <button onclick="showPage('home-content')">Back to Home</button>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item" onclick="showPage('home-content', event)">Home</a>
+        <a href="#" class="nav-item" onclick="showPage('settings-content', event)">Settings</a>
+        <a href="#" class="nav-item" onclick="toggleMenu(event)">Menu</a>
+    </nav>
+
+    <div id="popup-menu" class="popup-menu">
+        <a href="games.html">Games</a>
+        <a href="wsites.html">Useful Websites</a>
+        <a href="apps.html">Apps</a>
+        <a href="proxy.html">Proxy</a>
+        <a href="soundboards.html">Soundboards</a>
+        <a href="movies.html">Movies+Shows</a>
+        <a href="credits.html">Credits</a>
+        <a href="htdownload.html">How to download my site</a>
+        <button onclick="toggleMenu()" class="close-btn">Close</button>
+    </div>
+
+    <script>
+        const panicButton = document.getElementById('panic-button');
+
+        const defaultPanicURL = "https://example.com";
+
+        panicButton.title = "Panic Button";
+
+        let dragOffsetX = 0, dragOffsetY = 0;
+        let isDragging = false;
+
+        panicButton.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragOffsetX = e.clientX - panicButton.offsetLeft;
+            dragOffsetY = e.clientY - panicButton.offsetTop;
+            panicButton.style.transition = "none";
+            e.preventDefault();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                panicButton.style.transition = "";
+                savePanicButtonPosition();
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                let newLeft = e.clientX - dragOffsetX;
+                let newTop = e.clientY - dragOffsetY;
+                const padding = 10;
+                const maxLeft = window.innerWidth - panicButton.offsetWidth - padding;
+                const maxTop = window.innerHeight - panicButton.offsetHeight - padding;
+                newLeft = Math.min(Math.max(newLeft, padding), maxLeft);
+                newTop = Math.min(Math.max(newTop, padding), maxTop);
+                panicButton.style.left = newLeft + 'px';
+                panicButton.style.top = newTop + 'px';
+                panicButton.style.right = 'auto';
+                panicButton.style.bottom = 'auto';
+            }
+        });
+
+        panicButton.addEventListener('click', () => {
+            if (!isDragging) {
+                let url = localStorage.getItem('panicButtonUrl') || defaultPanicURL;
+                window.open(url, '_blank');
+            }
+        });
+
+        function savePanicButtonPosition() {
+            localStorage.setItem('panicButtonLeft', panicButton.style.left);
+            localStorage.setItem('panicButtonTop', panicButton.style.top);
+        }
+
+        function loadPanicButtonPosition() {
+            const left = localStorage.getItem('panicButtonLeft');
+            const top = localStorage.getItem('panicButtonTop');
+            if (left && top) {
+                panicButton.style.left = left;
+                panicButton.style.top = top;
+                panicButton.style.right = 'auto';
+                panicButton.style.bottom = 'auto';
+            }
+        }
+
+        function savePanicButtonColor(color) {
+            localStorage.setItem('panicButtonColor', color);
+        }
+
+        function loadPanicButtonColor() {
+            const color = localStorage.getItem('panicButtonColor');
+            if (color) {
+                panicButton.style.backgroundColor = color;
+                document.getElementById('panic-color-picker').value = color;
+            }
+        }
+
+        function savePanicUrl(url) {
+            localStorage.setItem('panicButtonUrl', url);
+        }
+
+        function loadPanicUrl() {
+            const url = localStorage.getItem('panicButtonUrl');
+            if(url) {
+                document.getElementById('panic-url').value = url;
+            } else {
+                document.getElementById('panic-url').value = "";
+            }
+        }
+
+        function setBackgroundPreset(url) {
+            const body = document.body;
+            body.style.backgroundImage = `url('${url}')`;
+            body.classList.add('background-image-mode');
+            localStorage.setItem('userBackgroundImage', url);
+            document.getElementById('background-image-url').value = url;
+        }
+
+        // Button color manipulation
+        const buttonColorPicker = document.getElementById("button-color-picker");
+        const buttonBorderColorPicker = document.getElementById('button-border-color-picker');
+        const buttonBorderSizeSelect = document.getElementById('button-border-size-select');
+
+        buttonColorPicker.addEventListener("input", () => {
+            updateButtonColors(buttonColorPicker.value);
+        });
+        buttonBorderColorPicker.addEventListener('input', () => {
+            updateButtonBorders();
+        });
+        buttonBorderSizeSelect.addEventListener('change', () => {
+            updateButtonBorders();
+        });
+
+        function isColorLight(color) {
+            if (!color.startsWith('#') || (color.length !== 7)) return true;
+            const r = parseInt(color.substr(1, 2), 16);
+            const g = parseInt(color.substr(3, 2), 16);
+            const b = parseInt(color.substr(5, 2), 16);
+            const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+            return luminance > 180;
+        }
+
+        function updateButtonColors(color) {
+            const buttons = document.querySelectorAll("button:not(.close-btn), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
+            buttons.forEach(button => {
+                button.style.backgroundColor = color;
+                const isLight = isColorLight(color);
+                button.style.color = isLight ? '#000' : '#fff';
+                button.style.borderColor = buttonBorderColorPicker.value;
+                button.onmouseover = () => {
+                    button.style.backgroundColor = isLight ? '#000' : color;
+                    button.style.color = isLight ? color : '#FFA500';
+                    button.style.borderColor = isLight ? '#000' : buttonBorderColorPicker.value;
+                };
+                button.onmouseout = () => {
+                    button.style.backgroundColor = color;
+                    button.style.color = isLight ? '#000' : '#fff';
+                    button.style.borderColor = buttonBorderColorPicker.value;
+                };
+            });
+        }
+
+        function updateButtonBorders() {
+            const color = buttonBorderColorPicker.value;
+            const size = buttonBorderSizeSelect.value;
+            const buttons = document.querySelectorAll("button:not(.close-btn), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
+            buttons.forEach(button => {
+                button.style.borderColor = color;
+                button.style.borderWidth = size;
+                button.style.borderStyle = 'solid';
+            });
+        }
+
+        // Apply all appearance settings and save
+        const oldApply = applyAppearanceSettings;
+        applyAppearanceSettings = function() {
+            oldApply();
+
+            const btnColor = buttonColorPicker.value;
+            localStorage.setItem('userButtonColor', btnColor);
+            updateButtonColors(btnColor);
+
+            const btnBorderColor = buttonBorderColorPicker.value;
+            const btnBorderSize = buttonBorderSizeSelect.value;
+            localStorage.setItem('userButtonBorderColor', btnBorderColor);
+            localStorage.setItem('userButtonBorderSize', btnBorderSize);
+            updateButtonBorders();
+        };
+
+        function loadAppearanceSettings() {
+            const savedFont = localStorage.getItem('userFont');
+            const savedFontSize = localStorage.getItem('userFontSize');
+            const savedTextColor = localStorage.getItem('userTextColor');
+            const savedBackgroundImage = localStorage.getItem('userBackgroundImage');
+            const body = document.body;
+
+            if (savedFont) {
+                body.style.fontFamily = savedFont;
+                document.getElementById('font-select').value = savedFont;
+            }
+            if (savedFontSize) {
+                body.style.fontSize = savedFontSize;
+                document.getElementById('font-size-select').value = savedFontSize;
+            } else {
+                body.style.fontSize = "16px";
+                document.getElementById('font-size-select').value = "16px";
+            }
+            if (savedTextColor) {
+                body.style.color = savedTextColor;
+                document.getElementById('text-color-picker').value = savedTextColor;
+            } else {
+                body.style.color = "#fff";
+                document.getElementById('text-color-picker').value = "#ffffff";
+            }
+            if (savedBackgroundImage) {
+                body.style.backgroundImage = `url('${savedBackgroundImage}')`;
+                body.classList.add('background-image-mode');
+                document.getElementById('background-image-url').value = savedBackgroundImage;
+            }
+            loadPanicUrl();
+
+            const savedHotkey = localStorage.getItem('panicHotkey');
+            document.getElementById('hotkey-input').value = savedHotkey || "";
+
+            // Load button colors and borders
+            const savedButtonColor = localStorage.getItem('userButtonColor');
+            if(savedButtonColor){
+                buttonColorPicker.value = savedButtonColor;
+                updateButtonColors(savedButtonColor);
+            }
+
+            const savedBorderColor = localStorage.getItem('userButtonBorderColor');
+            if (savedBorderColor) {
+                buttonBorderColorPicker.value = savedBorderColor;
+            }
+            const savedBorderSize = localStorage.getItem('userButtonBorderSize');
+            if (savedBorderSize) {
+                buttonBorderSizeSelect.value = savedBorderSize;
+            }
+            updateButtonBorders();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const hotkey = localStorage.getItem('panicHotkey');
+            if (!hotkey) return;
+
+            const normalizedHotkey = hotkey.toLowerCase().split('+').map(h => h.trim());
+            let ctrl = normalizedHotkey.includes('ctrl');
+            let shift = normalizedHotkey.includes('shift');
+            let alt = normalizedHotkey.includes('alt');
+            let key = normalizedHotkey.find(k => !['ctrl','shift','alt'].includes(k));
+            if (!key) return;
+
+            if ((ctrl === e.ctrlKey) && (shift === e.shiftKey) && (alt === e.altKey) && (e.key.toLowerCase() === key)) {
+                e.preventDefault();
+                let url = localStorage.getItem('panicButtonUrl') || defaultPanicURL;
+                window.open(url, '_blank');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAppearanceSettings();
+            loadPanicButtonPosition();
+            loadPanicButtonColor();
+        });
+
+        function toggleMenu(event) {
+            if (event) event.preventDefault();
+            document.getElementById("popup-menu").classList.toggle("show");
+        }
+
+        function showPage(pageId, event) {
+            if (event) event.preventDefault();
+            const contents = document.querySelectorAll('.page-content');
+            contents.forEach(content => content.classList.remove('active'));
+            const activePage = document.getElementById(pageId);
+            if (activePage) activePage.classList.add('active');
+            const menu = document.getElementById("popup-menu");
+            if (menu.classList.contains('show')) toggleMenu();
+        }
+
+        document.getElementById('panic-color-picker').addEventListener('input', e => {
+            panicButton.style.backgroundColor = e.target.value;
+        });
+    </script>
+</body>
+</html>
