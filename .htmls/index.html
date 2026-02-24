@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Game Site Template - Home</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Import Google Fonts: Bungee, Fredoka One, Nosifer, Black Ops One, Audiowide, Bubblegum Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Black+Ops+One&family=Bungee&family=Bubblegum+Sans&family=Fredoka+One&family=Nosifer&display=swap" rel="stylesheet" />
     <style>
-        /* Pixelify font from local/alternative CDN (better workaround with public font) */
+        /* Pixelify Sans font from local/alternative CDN */
         @font-face {
-            font-family: 'Pixelify';
+            font-family: 'Pixelify Sans';
             src: url('https://files.florian-rappl.de/pixelify/Pixellari.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
@@ -18,7 +19,7 @@
         body {
             font-family: 'Bungee', sans-serif;
             background-color: #000;
-            color: #000; /* text color black globally (overridden) */
+            color: #fff; /* set default text color white */
             margin: 0;
             padding-bottom: 60px;
             text-align: center;
@@ -248,14 +249,13 @@
     </style>
 </head>
 <body>
-    <header><h1>Game Zone</h1></header>
-
+  <a href="https://fontmeme.com/glitch-fonts/"><img src="https://fontmeme.com/permalink/260224/3eb8426f.png" alt="glitch-fonts" border="0"></a>
     <!-- Panic Button -->
     <button id="panic-button" title="Panic Button">!</button>
 
     <main>
         <div id="home-content" class="page-content active">
-            <p>Welcome to the Home Page!</p>
+            <p>Wassup guys! This is a new game site creator Lungus, giving you the newest game site technology in Pixel Playground!</p>
         </div>
 
         <div id="settings-content" class="page-content">
@@ -266,7 +266,7 @@
                 <label for="font-select">Change Font:</label>
                 <select id="font-select" aria-label="Font selection">
                     <option value="'Bungee', sans-serif">Bungee</option>
-                    <option value="'Pixelify', sans-serif">Pixelify</option>
+                    <option value="'Pixelify Sans', sans-serif">Pixelify Sans</option>
                     <option value="'Fredoka One', cursive">Fredoka One</option>
                     <option value="'Nosifer', cursive">Nosifer</option>
                     <option value="'Black Ops One', cursive">Black Ops One</option>
@@ -297,38 +297,36 @@
                 <input type="text" id="background-image-url" placeholder="Enter image URL (e.g., https://picsum.photos)" />
             </div>
 
-            <div class="settings-option">
-                <label>Preset Backgrounds:</label>
-                <div class="background-presets">
-                    <button type="button" aria-label="Preset 1" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif" alt="Preset 1" />
-                    </button>
-                    <button type="button" aria-label="Preset 2" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/54QEU276ZTIKU47PLYSXEL365PDJR5JM.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/54QEU276ZTIKU47PLYSXEL365PDJR5JM.gif" alt="Preset 2" />
-                    </button>
-                    <button type="button" aria-label="Preset 3" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/LN7OVZGYW4IX4OFUQ2JTV5BCFOTHAWFW.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/LN7OVZGYW4IX4OFUQ2JTV5BCFOTHAWFW.gif" alt="Preset 3" />
-                    </button>
-                    <button type="button" aria-label="Preset 4" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif" alt="Preset 4" />
-                    </button>
-                    <button type="button" aria-label="Preset 5" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/77ASGVD3JJCPIOMTWBW7BTZXYBYVLAFJ.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/77ASGVD3JJCPIOMTWBW7BTZXYBYVLAFJ.gif" alt="Preset 5" />
-                    </button>
-                    <button type="button" aria-label="Preset 6" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/GR7IT7SXLL423JV2INXR36IZLNESA42X.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/GR7IT7SXLL423JV2INXR36IZLNESA42X.gif" alt="Preset 6" />
-                    </button>
-                    <button type="button" aria-label="Preset 7" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif" alt="Preset 7" />
-                    </button>
-                    <button type="button" aria-label="Preset 8" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/ZW67MZRWGUGQJVA2P6XD46WLO4UC53HL.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/ZW67MZRWGUGQJVA2P6XD46WLO4UC53HL.gif" alt="Preset 8" />
-                    </button>
-                    <button type="button" aria-label="Preset 9" onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif')">
-                      <img src="https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif" alt="Preset 9" />
-                    </button>
-                </div>
-            </div>
+           <div class="background-presets">
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif')">
+        <img src="https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif" alt="Background 1">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/27LWURB2RUZJVTVHNQQRZLO3HES4MBJQ.gif')">
+        <img src="https://blob.gifcities.org/gifcities/27LWURB2RUZJVTVHNQQRZLO3HES4MBJQ.gif" alt="Background 2">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/NAGFD2J2TPYJIQH6XWJJJJJBYP7QEH5B.gif')">
+        <img src="https://blob.gifcities.org/gifcities/NAGFD2J2TPYJIQH6XWJJJJJBYP7QEH5B.gif" alt="Background 3">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif')">
+        <img src="https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif" alt="Background 4">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/NQHSYKRXP77OUW3ZH4ETI54JBERMIMKI.gif')">
+        <img src="https://blob.gifcities.org/gifcities/NQHSYKRXP77OUW3ZH4ETI54JBERMIMKI.gif" alt="Background 5">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/QTYWOGYU4WYQEKOC2Z5AMEXFINU6DFMI.gif')">
+        <img src="https://blob.gifcities.org/gifcities/QTYWOGYU4WYQEKOC2Z5AMEXFINU6DFMI.gif" alt="Background 6">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif')">
+        <img src="https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif" alt="Background 7">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif')">
+        <img src="https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif" alt="Background 8">
+    </button>
+    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/22N7YVHAA5ZB4D7QCVEL5SSANAQSNPJ4.gif')">
+        <img src="https://blob.gifcities.org/gifcities/22N7YVHAA5ZB4D7QCVEL5SSANAQSNPJ4.gif" alt="Background 9">
+    </button>
+</div>
+
 
             <div class="settings-option">
                 <label for="panic-color-picker">Change Panic Button Color:</label>
@@ -337,7 +335,7 @@
 
             <div class="settings-option">
                 <label for="panic-url">Panic Button URL:</label>
-                <input type="text" id="panic-url" placeholder="Enter URL to open (default: https://example.com)" />
+                <input type="text" id="panic-url" placeholder="Enter URL to open (default: https://clever.com/in/chandler/student/portal)" />
             </div>
 
             <div class="settings-option">
@@ -366,12 +364,14 @@
                     <option value="5px">5px (Extra Thick)</option>
                 </select>
             </div>
-
+            
             <div class="settings-option">
-                <button onclick="applyAppearanceSettings()" class="save-btn">Save Appearance Settings</button>
+  <button style="background-color:#ff4c4c; color:#fff;" onclick="resetToDefault()">Reset to Default</button>
+</div>
+            <div class="settings-option">
+                <button onclick="saveAllSettings()" class="save-btn">Save All Settings</button>
             </div>
 
-            <button onclick="alert('Settings Saved!')">Save All Settings</button>
             <button onclick="showPage('home-content')">Back to Home</button>
         </div>
     </main>
@@ -383,23 +383,21 @@
     </nav>
 
     <div id="popup-menu" class="popup-menu">
-        <a href="games.html">Games</a>
-        <a href="wsites.html">Useful Websites</a>
-        <a href="apps.html">Apps</a>
-        <a href="proxy.html">Proxy</a>
-        <a href="soundboards.html">Soundboards</a>
-        <a href="movies.html">Movies+Shows</a>
-        <a href="credits.html">Credits</a>
-        <a href="htdownload.html">How to download my site</a>
+       <a href="games.html"><i class="fa-solid fa-gamepad"></i>  Games</a>
+        <a href="wsites.html"><i class="fa-solid fa-globe"></i>  Useful Websites</a>
+        <a href="apps.html"><i class="fa-brands fa-app-store"></i>  Apps</a>
+        <a href="proxy.html"><i class="fa-solid fa-arrows-rotate"></i>  Proxy</a>
+        <a href="soundboards.html"><i class="fa-solid fa-circle-dot"></i>  Soundboards</a>
+        <a href="movies.html"><i class="fa-solid fa-clapperboard"></i>  Movies+Shows</a>
+        <a href="credits.html"><i class="fa-solid fa-circle-user"></i>  Credits</a>
+        <a href="htdownload.html"><i class="fa-solid fa-download"></i>  How to download my site</a>
         <button onclick="toggleMenu()" class="close-btn">Close</button>
     </div>
 
     <script>
+        // Panic button drag & click behavior
         const panicButton = document.getElementById('panic-button');
-
-        const defaultPanicURL = "https://example.com";
-
-        panicButton.title = "Panic Button";
+        const defaultPanicURL = "https://clever.com/in/chandler/student/portal";
 
         let dragOffsetX = 0, dragOffsetY = 0;
         let isDragging = false;
@@ -447,6 +445,32 @@
             localStorage.setItem('panicButtonLeft', panicButton.style.left);
             localStorage.setItem('panicButtonTop', panicButton.style.top);
         }
+        
+        function resetToDefault() {
+    if (!confirm("Are you sure you want to reset all settings to default?")) return;
+    localStorage.clear();
+    // Reset styles directly
+    document.body.style.fontFamily = "'Bungee', sans-serif";
+    document.body.style.fontSize = "16px";
+    document.body.style.color = "#fff";
+    document.body.style.backgroundImage = "";
+    document.body.classList.remove('background-image-mode');
+    document.getElementById('font-select').value = "'Bungee', sans-serif";
+    document.getElementById('font-size-select').value = "16px";
+    document.getElementById('text-color-picker').value = "#ffffff";
+    document.getElementById('background-image-url').value = "";
+    document.getElementById('panic-url').value = "";
+    document.getElementById('panic-color-picker').value = "#FF6347";
+    panicButton.style.backgroundColor = "#FF6347";
+    document.getElementById('hotkey-input').value = "";
+    document.getElementById('button-color-picker').value = "#FFA500";
+    document.getElementById('button-border-color-picker').value = "#FFA500";
+    document.getElementById('button-border-size-select').value = "2px";
+    updateButtonColors("#FFA500");
+    updateButtonBorders();
+    alert("Settings reset to default!");
+}
+
 
         function loadPanicButtonPosition() {
             const left = localStorage.getItem('panicButtonLeft');
@@ -548,21 +572,65 @@
         }
 
         // Apply all appearance settings and save
-        const oldApply = applyAppearanceSettings;
-        applyAppearanceSettings = function() {
-            oldApply();
+        function saveAllSettings() {
+            // Save font
+            const font = document.getElementById('font-select').value;
+            localStorage.setItem('userFont', font);
+            document.body.style.fontFamily = font;
 
-            const btnColor = buttonColorPicker.value;
-            localStorage.setItem('userButtonColor', btnColor);
-            updateButtonColors(btnColor);
+            // Save font size
+            const fontSize = document.getElementById('font-size-select').value;
+            localStorage.setItem('userFontSize', fontSize);
+            document.body.style.fontSize = fontSize;
 
-            const btnBorderColor = buttonBorderColorPicker.value;
-            const btnBorderSize = buttonBorderSizeSelect.value;
-            localStorage.setItem('userButtonBorderColor', btnBorderColor);
-            localStorage.setItem('userButtonBorderSize', btnBorderSize);
+            // Save text color
+            const textColor = document.getElementById('text-color-picker').value;
+            localStorage.setItem('userTextColor', textColor);
+            document.body.style.color = textColor;
+
+            // Save background image URL
+            const bgImage = document.getElementById('background-image-url').value;
+            localStorage.setItem('userBackgroundImage', bgImage);
+            if (bgImage) {
+                document.body.style.backgroundImage = `url('${bgImage}')`;
+                document.body.classList.add('background-image-mode');
+            } else {
+                document.body.style.backgroundImage = '';
+                document.body.classList.remove('background-image-mode');
+            }
+
+            // Save panic button URL
+            const panicUrl = document.getElementById('panic-url').value || 'https://example.com';
+            localStorage.setItem('panicButtonUrl', panicUrl);
+
+            // Save panic button color
+            const panicColor = document.getElementById('panic-color-picker').value;
+            localStorage.setItem('panicButtonColor', panicColor);
+            document.getElementById('panic-button').style.backgroundColor = panicColor;
+
+            // Save panic hotkey
+            const hotkey = document.getElementById('hotkey-input').value.trim();
+            if (hotkey) {
+                localStorage.setItem('panicHotkey', hotkey);
+            } else {
+                localStorage.removeItem('panicHotkey');
+            }
+
+            // Save button colors and borders
+            const buttonColor = document.getElementById('button-color-picker').value;
+            localStorage.setItem('userButtonColor', buttonColor);
+            const buttonBorderColor = document.getElementById('button-border-color-picker').value;
+            localStorage.setItem('userButtonBorderColor', buttonBorderColor);
+            const buttonBorderSize = document.getElementById('button-border-size-select').value;
+            localStorage.setItem('userButtonBorderSize', buttonBorderSize);
+
+            updateButtonColors(buttonColor);
             updateButtonBorders();
-        };
 
+            alert('Settings saved!');
+        }
+
+        // Load appearance settings from localStorage
         function loadAppearanceSettings() {
             const savedFont = localStorage.getItem('userFont');
             const savedFontSize = localStorage.getItem('userFontSize');
@@ -616,6 +684,34 @@
             updateButtonBorders();
         }
 
+        // Font change live update
+        document.getElementById('font-select').addEventListener('change', () => {
+            const font = document.getElementById('font-select').value;
+            document.body.style.fontFamily = font;
+        });
+        document.getElementById('font-size-select').addEventListener('change', () => {
+            const size = document.getElementById('font-size-select').value;
+            document.body.style.fontSize = size;
+        });
+        document.getElementById('text-color-picker').addEventListener('input', () => {
+            const color = document.getElementById('text-color-picker').value;
+            document.body.style.color = color;
+        });
+        document.getElementById('background-image-url').addEventListener('input', () => {
+            const url = document.getElementById('background-image-url').value;
+            if(url) {
+                document.body.style.backgroundImage = `url('${url}')`;
+                document.body.classList.add('background-image-mode');
+            } else {
+                document.body.style.backgroundImage = '';
+                document.body.classList.remove('background-image-mode');
+            }
+        });
+
+        document.getElementById('panic-color-picker').addEventListener('input', e => {
+            panicButton.style.backgroundColor = e.target.value;
+        });
+
         document.addEventListener('keydown', (e) => {
             const hotkey = localStorage.getItem('panicHotkey');
             if (!hotkey) return;
@@ -654,10 +750,6 @@
             const menu = document.getElementById("popup-menu");
             if (menu.classList.contains('show')) toggleMenu();
         }
-
-        document.getElementById('panic-color-picker').addEventListener('input', e => {
-            panicButton.style.backgroundColor = e.target.value;
-        });
     </script>
 </body>
 </html>
