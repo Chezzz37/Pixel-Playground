@@ -110,6 +110,7 @@
             user-select: none;
         }
 
+        /* Removed hover colors on popup menu links & buttons for text color changes: */
         .popup-menu a:hover,
         .popup-menu button:hover {
             background-color: #FFA500;
@@ -164,6 +165,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        /* Remove text color changes on hover for all buttons */
         button:hover, input[type="button"]:hover, input[type="submit"]:hover {
             background-color: #000;
             color: #FFA500;
@@ -222,29 +224,28 @@
             margin-top: 10px;
         }
 
+        /* Updated background preset buttons to solid color squares with consistent sizing */
         .background-presets button {
             padding: 0;
             border: 2px solid #FFA500;
             border-radius: 5px;
             cursor: pointer;
-            background-color: transparent;
             transition: border-color 0.3s;
             user-select: none;
+            height: 70px;
+            width: 70px;
         }
 
+        /* No background color change on hover, only border highlight */
         .background-presets button:hover,
         .background-presets button:focus {
             border-color: #FF7F50;
             outline: none;
         }
 
-        .background-presets img {
-            width: 100%;
-            height: 70px;
-            border-radius: 5px;
-            object-fit: cover;
-            pointer-events: none;
-            user-select: none;
+        /* Hide images for these preset buttons */
+        .background-presets button > img {
+            display: none;
         }
     </style>
 </head>
@@ -298,33 +299,17 @@
             </div>
 
            <div class="background-presets">
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif')">
-        <img src="https://blob.gifcities.org/gifcities/AFQIDDI5BTTEWIQYR4KGQ56K4COHTDT4.gif" alt="Background 1">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/27LWURB2RUZJVTVHNQQRZLO3HES4MBJQ.gif')">
-        <img src="https://blob.gifcities.org/gifcities/27LWURB2RUZJVTVHNQQRZLO3HES4MBJQ.gif" alt="Background 2">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/NAGFD2J2TPYJIQH6XWJJJJJBYP7QEH5B.gif')">
-        <img src="https://blob.gifcities.org/gifcities/NAGFD2J2TPYJIQH6XWJJJJJBYP7QEH5B.gif" alt="Background 3">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif')">
-        <img src="https://blob.gifcities.org/gifcities/34OJ4YHOWPIIKTKNC5YMVJDXCS47PZ4W.gif" alt="Background 4">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/NQHSYKRXP77OUW3ZH4ETI54JBERMIMKI.gif')">
-        <img src="https://blob.gifcities.org/gifcities/NQHSYKRXP77OUW3ZH4ETI54JBERMIMKI.gif" alt="Background 5">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/QTYWOGYU4WYQEKOC2Z5AMEXFINU6DFMI.gif')">
-        <img src="https://blob.gifcities.org/gifcities/QTYWOGYU4WYQEKOC2Z5AMEXFINU6DFMI.gif" alt="Background 6">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif')">
-        <img src="https://blob.gifcities.org/gifcities/5U35W36QFTG2NAUD63ZQG2YWCQ7OZ7FX.gif" alt="Background 7">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif')">
-        <img src="https://blob.gifcities.org/gifcities/OEFWZFDLTNS4EQDVBKRGC2KXL6V4UYM2.gif" alt="Background 8">
-    </button>
-    <button onclick="setBackgroundPreset('https://blob.gifcities.org/gifcities/22N7YVHAA5ZB4D7QCVEL5SSANAQSNPJ4.gif')">
-        <img src="https://blob.gifcities.org/gifcities/22N7YVHAA5ZB4D7QCVEL5SSANAQSNPJ4.gif" alt="Background 9">
-    </button>
+    <button onclick="setBackgroundPresetColor('red')" style="background-color: red;" aria-label="Red background"></button>
+    <button onclick="setBackgroundPresetColor('orange')" style="background-color: orange;" aria-label="Orange background"></button>
+    <button onclick="setBackgroundPresetColor('yellow')" style="background-color: yellow;" aria-label="Yellow background"></button>
+    <button onclick="setBackgroundPresetColor('green')" style="background-color: green;" aria-label="Green background"></button>
+    <button onclick="setBackgroundPresetColor('cyan')" style="background-color: cyan;" aria-label="Cyan background"></button>
+    <button onclick="setBackgroundPresetColor('blue')" style="background-color: blue;" aria-label="Blue background"></button>
+    <button onclick="setBackgroundPresetColor('purple')" style="background-color: purple;" aria-label="Purple background"></button>
+    <button onclick="setBackgroundPresetColor('pink')" style="background-color: pink;" aria-label="Pink background"></button>
+    <button onclick="setBackgroundPresetColor('brown')" style="background-color: brown;" aria-label="Brown background"></button>
+    <button onclick="setBackgroundPresetColor('white')" style="background-color: white; border-color: #000;" aria-label="White background"></button>
+    <button onclick="setBackgroundPresetColor('black')" style="background-color: black;" aria-label="Black background"></button>
 </div>
 
 
@@ -447,29 +432,48 @@
         }
         
         function resetToDefault() {
-    if (!confirm("Are you sure you want to reset all settings to default?")) return;
-    localStorage.clear();
-    // Reset styles directly
-    document.body.style.fontFamily = "'Bungee', sans-serif";
-    document.body.style.fontSize = "16px";
-    document.body.style.color = "#fff";
-    document.body.style.backgroundImage = "";
-    document.body.classList.remove('background-image-mode');
-    document.getElementById('font-select').value = "'Bungee', sans-serif";
-    document.getElementById('font-size-select').value = "16px";
-    document.getElementById('text-color-picker').value = "#ffffff";
-    document.getElementById('background-image-url').value = "";
-    document.getElementById('panic-url').value = "";
-    document.getElementById('panic-color-picker').value = "#FF6347";
-    panicButton.style.backgroundColor = "#FF6347";
-    document.getElementById('hotkey-input').value = "";
-    document.getElementById('button-color-picker').value = "#FFA500";
-    document.getElementById('button-border-color-picker').value = "#FFA500";
-    document.getElementById('button-border-size-select').value = "2px";
-    updateButtonColors("#FFA500");
-    updateButtonBorders();
-    alert("Settings reset to default!");
-}
+            if (!confirm("Are you sure you want to reset all settings to default?")) return;
+            localStorage.clear();
+
+            // Reset background color to black (default)
+            document.body.style.backgroundColor = '#000';
+            document.body.style.backgroundImage = "";
+            document.body.classList.remove('background-image-mode');
+
+            document.body.style.fontFamily = "'Bungee', sans-serif";
+            document.body.style.fontSize = "16px";
+            document.body.style.color = "#fff";
+
+            document.getElementById('font-select').value = "'Bungee', sans-serif";
+            document.getElementById('font-size-select').value = "16px";
+            document.getElementById('text-color-picker').value = "#ffffff";
+            document.getElementById('background-image-url').value = "";
+            document.getElementById('panic-url').value = "";
+            document.getElementById('panic-color-picker').value = "#FF6347";
+            panicButton.style.backgroundColor = "#FF6347";
+            document.getElementById('hotkey-input').value = "";
+            document.getElementById('button-color-picker').value = "#FFA500";
+            document.getElementById('button-border-color-picker').value = "#FFA500";
+            document.getElementById('button-border-size-select').value = "2px";
+            updateButtonColors("#FFA500");
+            updateButtonBorders();
+
+            // Make Reset and Close buttons red
+            const resetBtn = document.querySelector(".settings-option button[onclick='resetToDefault()']");
+            const closeBtn = document.querySelector(".popup-menu .close-btn");
+            if(resetBtn) {
+                resetBtn.style.backgroundColor = "#FF4C4C";
+                resetBtn.style.color = "#fff";
+                resetBtn.style.borderColor = "#FF4C4C";
+            }
+            if(closeBtn) {
+                closeBtn.style.backgroundColor = "#FF4C4C";
+                closeBtn.style.color = "#fff";
+                closeBtn.style.borderColor = "#FF4C4C";
+            }
+
+            alert("Settings reset to default!");
+        }
 
 
         function loadPanicButtonPosition() {
@@ -512,8 +516,20 @@
             const body = document.body;
             body.style.backgroundImage = `url('${url}')`;
             body.classList.add('background-image-mode');
+            body.style.backgroundColor = ''; // Clear color for image presets
             localStorage.setItem('userBackgroundImage', url);
+            localStorage.removeItem('userBackgroundColor');
             document.getElementById('background-image-url').value = url;
+        }
+
+        function setBackgroundPresetColor(color) {
+            const body = document.body;
+            body.style.backgroundImage = '';
+            body.classList.remove('background-image-mode');
+            body.style.backgroundColor = color;
+            localStorage.setItem('userBackgroundImage', '');
+            localStorage.setItem('userBackgroundColor', color);
+            document.getElementById('background-image-url').value = '';
         }
 
         // Button color manipulation
@@ -541,29 +557,24 @@
         }
 
         function updateButtonColors(color) {
-            const buttons = document.querySelectorAll("button:not(.close-btn), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
+            // Exclude .background-presets button so their solid colors stay unchanged
+            const buttons = document.querySelectorAll("button:not(.close-btn):not(.background-presets button), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
             buttons.forEach(button => {
                 button.style.backgroundColor = color;
                 const isLight = isColorLight(color);
                 button.style.color = isLight ? '#000' : '#fff';
                 button.style.borderColor = buttonBorderColorPicker.value;
-                button.onmouseover = () => {
-                    button.style.backgroundColor = isLight ? '#000' : color;
-                    button.style.color = isLight ? color : '#FFA500';
-                    button.style.borderColor = isLight ? '#000' : buttonBorderColorPicker.value;
-                };
-                button.onmouseout = () => {
-                    button.style.backgroundColor = color;
-                    button.style.color = isLight ? '#000' : '#fff';
-                    button.style.borderColor = buttonBorderColorPicker.value;
-                };
+
+                // Remove hover handlers that change text or bg colors
+                button.onmouseover = null;
+                button.onmouseout = null;
             });
         }
 
         function updateButtonBorders() {
             const color = buttonBorderColorPicker.value;
             const size = buttonBorderSizeSelect.value;
-            const buttons = document.querySelectorAll("button:not(.close-btn), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
+            const buttons = document.querySelectorAll("button:not(.close-btn):not(.background-presets button), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
             buttons.forEach(button => {
                 button.style.borderColor = color;
                 button.style.borderWidth = size;
@@ -588,19 +599,25 @@
             localStorage.setItem('userTextColor', textColor);
             document.body.style.color = textColor;
 
-            // Save background image URL
+            // Save background image URL or background color
             const bgImage = document.getElementById('background-image-url').value;
-            localStorage.setItem('userBackgroundImage', bgImage);
             if (bgImage) {
+                localStorage.setItem('userBackgroundImage', bgImage);
+                localStorage.removeItem('userBackgroundColor');
                 document.body.style.backgroundImage = `url('${bgImage}')`;
                 document.body.classList.add('background-image-mode');
             } else {
+                // Save background color from body or reset to black if empty
+                let bgColor = window.getComputedStyle(document.body).backgroundColor || '#000';
+                if (!bgColor || bgColor === 'rgba(0, 0, 0, 0)') bgColor = '#000';
+                localStorage.setItem('userBackgroundColor', bgColor);
+                localStorage.setItem('userBackgroundImage', '');
                 document.body.style.backgroundImage = '';
                 document.body.classList.remove('background-image-mode');
             }
 
             // Save panic button URL
-            const panicUrl = document.getElementById('panic-url').value || 'https://example.com';
+            const panicUrl = document.getElementById('panic-url').value || defaultPanicURL;
             localStorage.setItem('panicButtonUrl', panicUrl);
 
             // Save panic button color
@@ -636,6 +653,7 @@
             const savedFontSize = localStorage.getItem('userFontSize');
             const savedTextColor = localStorage.getItem('userTextColor');
             const savedBackgroundImage = localStorage.getItem('userBackgroundImage');
+            const savedBackgroundColor = localStorage.getItem('userBackgroundColor');
             const body = document.body;
 
             if (savedFont) {
@@ -659,8 +677,15 @@
             if (savedBackgroundImage) {
                 body.style.backgroundImage = `url('${savedBackgroundImage}')`;
                 body.classList.add('background-image-mode');
+                body.style.backgroundColor = '';
                 document.getElementById('background-image-url').value = savedBackgroundImage;
+            } else if (savedBackgroundColor) {
+                body.style.backgroundImage = '';
+                body.classList.remove('background-image-mode');
+                body.style.backgroundColor = savedBackgroundColor;
+                document.getElementById('background-image-url').value = '';
             }
+
             loadPanicUrl();
 
             const savedHotkey = localStorage.getItem('panicHotkey');
@@ -700,11 +725,12 @@
         document.getElementById('background-image-url').addEventListener('input', () => {
             const url = document.getElementById('background-image-url').value;
             if(url) {
-                document.body.style.backgroundImage = `url('${url}')`;
-                document.body.classList.add('background-image-mode');
+                setBackgroundPreset(url);
             } else {
+                // Clear background image and color to default black
                 document.body.style.backgroundImage = '';
                 document.body.classList.remove('background-image-mode');
+                document.body.style.backgroundColor = '#000';
             }
         });
 
