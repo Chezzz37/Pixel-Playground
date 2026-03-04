@@ -165,11 +165,19 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Remove text color changes on hover for all buttons */
+        /* Remove text color/background changes on hover for all buttons */
         button:hover, input[type="button"]:hover, input[type="submit"]:hover {
-            background-color: #000;
-            color: #FFA500;
-            border-color: #000;
+            background-color: inherit !important;
+            color: inherit !important;
+            border-color: inherit !important;
+            cursor: pointer;
+        }
+
+        /* Reset button: always red background and white text */
+        button.reset-btn {
+            background-color: #FF4C4C !important;
+            color: #fff !important;
+            border-color: #FF4C4C !important;
         }
 
         input, select {
@@ -354,7 +362,7 @@
             </div>
             
             <div class="settings-option">
-  <button style="background-color:#ff4c4c; color:#fff;" onclick="resetToDefault()">Reset to Default</button>
+  <button class="reset-btn" onclick="resetToDefault()">Reset to Default</button>
 </div>
             <div class="settings-option">
                 <button onclick="saveAllSettings()" class="save-btn">Save All Settings</button>
@@ -461,8 +469,8 @@
             updateButtonColors("#FFA500");
             updateButtonBorders();
 
-            // Make Reset and Close buttons red
-            const resetBtn = document.querySelector(".settings-option button[onclick='resetToDefault()']");
+            // Make Reset and Close buttons red and keep red after reset
+            const resetBtn = document.querySelector(".reset-btn");
             const closeBtn = document.querySelector(".popup-menu .close-btn");
             if(resetBtn) {
                 resetBtn.style.backgroundColor = "#FF4C4C";
@@ -477,7 +485,6 @@
 
             alert("Settings reset to default!");
         }
-
 
         function loadPanicButtonPosition() {
             const left = localStorage.getItem('panicButtonLeft');
@@ -559,20 +566,29 @@
             return luminance > 180;
         }
 
-        function updateButtonColors(color) {
-            // Exclude .background-presets button so their solid colors stay unchanged
-            const buttons = document.querySelectorAll("button:not(.close-btn):not(.background-presets button), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
-            buttons.forEach(button => {
-                button.style.backgroundColor = color;
-                const isLight = isColorLight(color);
-                button.style.color = isLight ? '#000' : '#fff';
-                button.style.borderColor = buttonBorderColorPicker.value;
+       function updateButtonColors(color) {
+    // Use the user selected text color for buttons text
+    const textColor = document.body.style.color || '#fff';
 
-                // Remove hover handlers that change text or bg colors
-                button.onmouseover = null;
-                button.onmouseout = null;
-            });
+    // Exclude .background-presets buttons
+    const buttons = document.querySelectorAll("button:not(.close-btn):not(.background-presets button), input[type='button']:not(.close-btn), input[type='submit']:not(.close-btn)");
+    buttons.forEach(button => {
+        button.style.backgroundColor = color;
+
+        // If button is reset button, force red and white text
+        if(button.classList.contains('reset-btn')) {
+            button.style.backgroundColor = "#FF4C4C";
+            button.style.color = "#fff";
+            button.style.borderColor = "#FF4C4C";
+        } else {
+            button.style.color = textColor;
+            button.style.borderColor = buttonBorderColorPicker.value;
         }
+        button.onmouseover = null;
+        button.onmouseout = null;
+    });
+}
+
 
         function updateButtonBorders() {
             const color = buttonBorderColorPicker.value;
@@ -646,6 +662,14 @@
 
             updateButtonColors(buttonColor);
             updateButtonBorders();
+
+            // Keep reset button red after saving
+            const resetBtn = document.querySelector(".reset-btn");
+            if(resetBtn){
+                resetBtn.style.backgroundColor = "#FF4C4C";
+                resetBtn.style.color = "#fff";
+                resetBtn.style.borderColor = "#FF4C4C";
+            }
 
             alert('Settings saved!');
         }
