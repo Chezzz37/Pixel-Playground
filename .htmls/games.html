@@ -28,44 +28,50 @@
             background-attachment: fixed;
             background-color: #000;
         }
-        /* Buttons for the game list */
-        #game-list button {
-            margin: 8px 12px;
-            padding: 12px 20px;
-            font-family: inherit;
-            font-size: 1.1rem;
-            border-radius: 6px;
-            border: 2px solid #FFA500;
+        /* Container for buttons */
+        #game-buttons {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+        #game-buttons button {
             background-color: #FFA500;
+            border: 2px solid #FFA500;
+            border-radius: 6px;
             color: #000;
             cursor: pointer;
+            font-family: inherit;
+            font-size: 1.1rem;
+            padding: 12px 20px;
+            width: 280px;
             user-select: none;
             transition: background-color 0.3s, color 0.3s;
-            min-width: 150px;
         }
-        #game-list button:hover {
+        #game-buttons button:hover {
             background-color: #000;
             color: #FFA500;
             border-color: #FFA500;
         }
-        /* Container for game viewer */
+
         #game-viewer-container {
-            display: none;
-            margin: 20px auto;
-            max-width: 1200px;
+            margin-top: 20px;
         }
         #game-frame {
-    width: 958px;
-    height: 489px;
-    border: 3px solid #FFA500;
-    border-radius: 8px;
-    background-color: #000;
-}
-
-        /* Controls below the game iframe */
+            width: 939px;
+            height: 459px;
+            border: 3px solid #FFA500;
+            border-radius: 8px;
+            background-color: #000;
+            display: none;
+            margin: 0 auto;
+        }
+        /* Controls below the large game iframe */
         #game-controls {
             margin-top: 10px;
-            display: flex;
+            display: none;
             justify-content: center;
             gap: 12px;
         }
@@ -115,16 +121,12 @@
 </head>
 <body>
     <h1 style="color:#fff; user-select:none; margin-top:20px;">Game Selection</h1>
-    <div id="game-list" aria-label="List of games" role="list">
-        <button role="listitem" data-url="https://raw.githubusercontent.com/CoolDude2349/Offline-HTML-Games-Pack/master/offline/crazycars.html">Game 1</button>
-        <button role="listitem" data-url="https://raw.githubusercontent.com/username/repo/main/game2/index.html">Game 2</button>
-        <button role="listitem" data-url="https://raw.githubusercontent.com/username/repo/main/game3/index.html">Game 3</button>
-        <button role="listitem" data-url="https://raw.githubusercontent.com/username/repo/main/game4/index.html">Game 4</button>
-        <!-- Add more games here with real raw github URLs -->
-    </div>
 
-    <div id="game-viewer-container" aria-label="Game viewer">
-        <iframe id="game-frame" src="" frameborder="0" sandbox="allow-scripts allow-same-origin"></iframe>
+    <!-- Buttons for games -->
+    <div id="game-buttons" aria-label="Game selection buttons"></div>
+
+    <div id="game-viewer-container" aria-label="Selected game viewer">
+        <iframe id="game-frame" src="" frameborder="0" sandbox="allow-scripts allow-same-origin" title="Selected game"></iframe>
         <div id="game-controls" role="group" aria-label="Game controls">
             <button id="open-new-tab-btn" type="button">Open in new tab</button>
             <button id="fullscreen-btn" type="button">Fullscreen</button>
@@ -138,104 +140,118 @@
     <a href="#" class="nav-item" id="menu-link">Menu</a>
 </nav>
 
-    <script>
-        const gameList = document.getElementById('game-list');
-        const gameViewer = document.getElementById('game-viewer-container');
-        const gameFrame = document.getElementById('game-frame');
-        const openNewTabBtn = document.getElementById('open-new-tab-btn');
-        const fullscreenBtn = document.getElementById('fullscreen-btn');
-        const backBtn = document.getElementById('back-btn');
-        let currentUrl = '';
-        
+<script>
+    // 1. Base URL for raw content
+    const rawBaseUrl = 'https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/';
 
-        // Show game viewer and load iframe with selected game URL
-        gameList.addEventListener('click', e => {
-            const btn = e.target.closest('button[data-url]');
-            if (!btn) return;
-            currentUrl = btn.dataset.url;
-            gameFrame.src = currentUrl;
-            gameList.style.display = 'none';
-            gameViewer.style.display = 'block';
+    // 2. List of game index files
+    const gameFiles = [
+      'game1/index.html',
+      'game2/index.html',
+      'folder/game3.js'
+    ];
+
+    // 3. Load games (e.g., in an iframe)
+    gameFiles.forEach(gamePath => {
+      const fullRawUrl = rawBaseUrl + gamePath;
+      console.log('Loading game from:', fullRawUrl);
+      
+      // Example: Setting an iframe source to the raw content
+      // document.getElementById('game-frame').src = fullRawUrl;
+    });
+
+    // Dummy game buttons using friendly names mapped to paths in gameFiles for iframe loading
+    const games = [
+        { path: rawBaseUrl + 'game1/index.html', name: 'Game 1' },
+        { path: rawBaseUrl + 'game2/index.html', name: 'Game 2' },
+        { path: rawBaseUrl + 'folder/game3.js', name: 'Game 3 (JS)' }
+    ];
+
+    const buttonsContainer = document.getElementById('game-buttons');
+    const gameFrame = document.getElementById('game-frame');
+    const gameControls = document.getElementById('game-controls');
+    const openNewTabBtn = document.getElementById('open-new-tab-btn');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const backBtn = document.getElementById('back-btn');
+
+    let currentUrl = '';
+
+    // Create game buttons for iframe loading
+    function createGameButtons() {
+        buttonsContainer.innerHTML = ""; // clear existing
+        games.forEach(({ path, name }) => {
+            const btn = document.createElement('button');
+            btn.textContent = name;
+            btn.type = "button";
+            btn.addEventListener('click', () => {
+                currentUrl = path;
+                gameFrame.src = currentUrl;
+                gameFrame.style.display = "block";
+                gameControls.style.display = "flex";
+                buttonsContainer.style.display = "none";
+            });
+            buttonsContainer.appendChild(btn);
         });
-
-        // Open game in new tab
-        openNewTabBtn.addEventListener('click', () => {
-            if(currentUrl) {
-                window.open(currentUrl, 'about:blank');
-            }
-        });
-
-        // Fullscreen the iframe
-fullscreenBtn.addEventListener('click', () => {
-    if (gameFrame.requestFullscreen) {
-        gameFrame.requestFullscreen();
-    } else if (gameFrame.webkitRequestFullscreen) { // Safari
-        gameFrame.webkitRequestFullscreen();
-    } else if (gameFrame.msRequestFullscreen) { // IE11
-        gameFrame.msRequestFullscreen();
     }
-});
 
-        // Back to game selection
-        backBtn.addEventListener('click', () => {
-            gameFrame.src = '';
-            gameViewer.style.display = 'none';
-            gameList.style.display = 'flex';
-            gameList.style.flexWrap = 'wrap';
-            gameList.style.justifyContent = 'center';
-        });
-
-        // Bottom nav handlers
-        document.getElementById('settings-link').addEventListener('click', e => {
-            e.preventDefault();
-            alert('Settings are only configurable on home page');
-        });
-
-        document.getElementById('menu-link').addEventListener('click', e => {
-            e.preventDefault();
-            alert('Menu only available on home page');
-        });
-
-        // Load appearance settings from localStorage just like index.html
-        function loadAppearanceSettings() {
-            const savedFont = localStorage.getItem('userFont');
-            const savedFontSize = localStorage.getItem('userFontSize');
-            const savedTextColor = localStorage.getItem('userTextColor');
-            const savedBackgroundImage = localStorage.getItem('userBackgroundImage');
-            const savedBackgroundColor = localStorage.getItem('userBackgroundColor');
-            const body = document.body;
-
-            if (savedFont) {
-                body.style.fontFamily = savedFont;
-            }
-            if (savedFontSize) {
-                body.style.fontSize = savedFontSize;
-            } else {
-                body.style.fontSize = "16px";
-            }
-            if (savedTextColor) {
-                body.style.color = savedTextColor;
-            } else {
-                body.style.color = "#fff";
-            }
-            if (savedBackgroundImage) {
-                body.style.backgroundImage = `url('${savedBackgroundImage}')`;
-                body.classList.add('background-image-mode');
-                body.style.backgroundColor = '';
-            } else if (savedBackgroundColor) {
-                body.style.backgroundImage = '';
-                body.classList.remove('background-image-mode');
-                body.style.backgroundColor = savedBackgroundColor;
-            }
+    openNewTabBtn.addEventListener('click', () => {
+        if (currentUrl) window.open(currentUrl, '_blank');
+    });
+    fullscreenBtn.addEventListener('click', () => {
+        if (gameFrame.requestFullscreen) {
+            gameFrame.requestFullscreen();
+        } else if (gameFrame.webkitRequestFullscreen) {
+            gameFrame.webkitRequestFullscreen();
+        } else if (gameFrame.msRequestFullscreen) {
+            gameFrame.msRequestFullscreen();
         }
+    });
+    backBtn.addEventListener('click', () => {
+        gameFrame.src = '';
+        gameFrame.style.display = "none";
+        gameControls.style.display = "none";
+        buttonsContainer.style.display = "flex";
+    });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAppearanceSettings();
-            // Adjust game list display style for flex wrap after load
-            gameList.style.display = 'flex';
-            gameList.style.flexWrap = 'wrap';
-            gameList.style.justifyContent = 'center';
-        });
-    </script>
+    // Bottom nav handlers
+    document.getElementById('settings-link').addEventListener('click', e => {
+        e.preventDefault();
+        alert('Settings are only configurable on home page');
+    });
+    document.getElementById('menu-link').addEventListener('click', e => {
+        e.preventDefault();
+        alert('Menu only available on home page');
+    });
+
+    // Load appearance settings from localStorage
+    function loadAppearanceSettings() {
+        const savedFont = localStorage.getItem('userFont');
+        const savedFontSize = localStorage.getItem('userFontSize');
+        const savedTextColor = localStorage.getItem('userTextColor');
+        const savedBackgroundImage = localStorage.getItem('userBackgroundImage');
+        const savedBackgroundColor = localStorage.getItem('userBackgroundColor');
+        const body = document.body;
+
+        if (savedFont) body.style.fontFamily = savedFont;
+        if (savedFontSize) body.style.fontSize = savedFontSize;
+        else body.style.fontSize = "16px";
+        if (savedTextColor) body.style.color = savedTextColor;
+        else body.style.color = "#fff";
+        if (savedBackgroundImage) {
+            body.style.backgroundImage = `url('${savedBackgroundImage}')`;
+            body.classList.add('background-image-mode');
+            body.style.backgroundColor = '';
+        } else if (savedBackgroundColor) {
+            body.style.backgroundImage = '';
+            body.classList.remove('background-image-mode');
+            body.style.backgroundColor = savedBackgroundColor;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAppearanceSettings();
+        createGameButtons();
+    });
+</script>
 </body>
 </html>
