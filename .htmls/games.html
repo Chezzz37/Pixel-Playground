@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Games - Pixel Playground</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Black+Ops+One&family=Bungee&family=Bubblegum+Sans&family=Fredoka+One&family=Nosifer&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Bungee', sans-serif;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding-bottom: 60px;
+      text-align: center;
+      transition: color 0.3s, background-color 0.3s;
+    }
+    h1 {
+      user-select: none;
+      padding: 16px 0;
+      margin: 0;
+      font-size: 2rem;
+      color: #fff;
+    }
+    #buttonsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+      gap: 15px;
+      max-width: 600px;
+      margin: 20px auto;
+      user-select: none;
+    }
+    #buttonsContainer button {
+      background-color: #FFA500;
+      border: 2px solid #FFA500;
+      border-radius: 8px;
+      color: #000;
+      padding: 15px 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+      user-select: none;
+    }
+    #buttonsContainer button:hover {
+      background-color: #FF7F50;
+      border-color: #FF7F50;
+      color: #000;
+    }
+    .bottom-nav {
+      background-color: #000;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -2px 10px rgba(255, 165, 0, 0.5);
+      z-index: 1000;
+      user-select: none;
+    }
+    .nav-item {
+      padding: 14px;
+      color: #FFA500;
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-item:hover {
+      background-color: #FFA500;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Games on Pixel Playground!</h1>
+  <p>These are the Games hosted on our site. Creds to Chez for code and persistence.</p>
+  <h2>ALL GAMES</h2>
+  <div id="buttonsContainer" aria-label="Games Buttons Container"></div>
+
+  <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+    <a href="index.html" class="nav-item" aria-label="Home">Home</a>
+    <a href="#" class="nav-item" onclick="alert('Settings only configurable on home page.'); return false;" aria-label="Settings">Settings</a>
+    <a href="#" class="nav-item" onclick="alert('Menu only available on home page.'); return false;" aria-label="Menu">Menu</a>
+  </nav>
+
+  <script>
+    const games = [
+      { name: "Crazy Cars", url: "https://raw.githubusercontent.com/CoolDude2349/Offline-HTML-Games-Pack/master/offline/crazycars.html" },
+      { name: "Game 2", url: "https://raw.githubusercontent.com/user/repo/main/game.html" }
+    ];
+    const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+
+    function launchGame(gameUrl) {
+      const proxyGameUrl = PROXY_URL + gameUrl;
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', proxyGameUrl, true);
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const win = window.open('', '_blank');
+          if (win) {
+            win.document.write(xhr.responseText);
+            win.document.close();
+            win.document.body.style.margin = '0';
+            win.document.body.style.overflow = 'hidden';
+          } else {
+            alert('Please allow pop-ups for this site to launch the game.');
+          }
+        } else {
+          console.error('Failed to load game:', xhr.statusText);
+          alert('Could not load the game. Check the console for details and ensure the CORS proxy is working.');
+        }
+      };
+      xhr.onerror = function () {
+        console.error('Network error occurred.');
+        alert('A network error occurred while trying to fetch the game.');
+      };
+      xhr.send();
+    }
+
+    const container = document.getElementById('buttonsContainer');
+    games.forEach(game => {
+      const btn = document.createElement('button');
+      btn.textContent = game.name;
+      btn.onclick = () => launchGame(game.url);
+      container.appendChild(btn);
+    });
+  </script>
+</body>
+</html>
