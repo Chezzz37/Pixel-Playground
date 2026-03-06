@@ -109,7 +109,7 @@
   <h1>Pixel Playground Games</h1>
 
   <div class="text-box">
-    <h2>Creds to Chez for codes+persistence. ALL GAMES OPEN IN ABOUT:BLANK!</h2>
+    <h2>Creds to Chez for codes+persistence. ALL GAMES OPEN IN ABOUT:BLANK! If you cant scroll, Zoom out (Ctrl +/-), Restart comp or click THIS TEXT to fix.</h2>
     <h2>IMPORTANT</h2>
     <p>If this is your first time or you encounter CORS issues, please request access to the CORS demo server by clicking the button below.</p>
     <button id="requestAccessBtn">Request CORS Access</button>
@@ -207,8 +207,10 @@ const games = [
           if (win) {
             win.document.write(xhr.responseText);
             win.document.close();
-            win.document.body.style.margin = '0';
-            win.document.body.style.overflow = 'hidden';
+          win.document.body.style.margin = '0';
+// Remove or change overflow to 'auto' to enable scrolling
+win.document.body.style.overflow = 'auto';
+
           } else {
             alert('Please allow pop-ups for this site to launch the game.');
           }
