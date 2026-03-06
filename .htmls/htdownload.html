@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How to Download Pixel Playground</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Black+Ops+One&family=Bungee&family=Bubblegum+Sans&family=Fredoka+One&family=Nosifer&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Bungee', sans-serif;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding-bottom: 60px;
+      text-align: center;
+      transition: color 0.3s, background-color 0.3s;
+      user-select: none;
+    }
+    h1 {
+      padding: 16px 0;
+      margin: 0;
+      font-size: 38px;
+      color: #fff;
+    }
+    .text-box {
+      max-width: 960px;
+      margin: 20px auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 8px;
+      color: #fff;
+      user-select: text;
+      text-align: left;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+    .text-box h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #FFA500;
+      user-select: text;
+    }
+    .text-box p, .text-box li {
+      user-select: text;
+      color: #ddd;
+    }
+    .bottom-nav {
+      background-color: #000;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -2px 10px rgba(255, 165, 0, 0.5);
+      z-index: 1000;
+    }
+    .nav-item {
+      padding: 14px;
+      color: #FFA500;
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-item:hover {
+      background-color: #FFA500;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
 
+  <h1>How to download this site</h1>
+  <h2>ONLY WORKS IN CHROMEOS OR IN CHROME BROWSER, AND INSTALLING THE WEB VERSION IS OPTIMAL.</h2>
+
+  <div class="text-box" aria-label="Credits information">
+    <h2>Step 1:</h2>
+    <p>At the top left corner of Chrome, navigate to the 3 dots and click them.</p>
+    
+    <h2>Step 2:</h2>
+    <p>Go down to "Save and Share".</p>
+    <h2>Step 3:</h2>
+    <p>Go down to "Install Page as App.</p>
+    <h2>Step 4:</h2>
+    <p>You can Customize the name and stuff, so Enjoy!</p>
+  </div>
+
+  <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+    <a href="index.html" class="nav-item" aria-label="Home">Home</a>
+    <a href="#" class="nav-item" onclick="alert('Settings only configurable on home page.'); return false;" aria-label="Settings">Settings</a>
+    <a href="#" class="nav-item" onclick="alert('Menu only available on home page.'); return false;" aria-label="Menu">Menu</a>
+  </nav>
+
+<script>
+  function loadAppearanceSettings() {
+    const body = document.body;
+    const font = localStorage.getItem('userFont');
+    const fontSize = localStorage.getItem('userFontSize');
+    const textColor = localStorage.getItem('userTextColor');
+    const bgImage = localStorage.getItem('userBackgroundImage');
+    const bgColor = localStorage.getItem('userBackgroundColor');
+
+    if (font) body.style.fontFamily = font;
+    if (fontSize) body.style.fontSize = fontSize;
+    if (textColor) body.style.color = textColor;
+    else body.style.color = '#fff';
+
+    if (bgImage) {
+      if (bgImage.trim() !== '') {
+        body.style.backgroundImage = `url('${bgImage}')`;
+        body.classList.add('background-image-mode');
+        body.style.backgroundColor = '';
+      } else {
+        body.style.backgroundImage = '';
+        body.classList.remove('background-image-mode');
+        body.style.backgroundColor = bgColor || '#000';
+      }
+    } else {
+      body.style.backgroundImage = '';
+      body.classList.remove('background-image-mode');
+      body.style.backgroundColor = bgColor || '#000';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadAppearanceSettings();
+  });
+</script>
+
+</body>
+</html>
