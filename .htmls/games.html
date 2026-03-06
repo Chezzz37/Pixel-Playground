@@ -115,8 +115,20 @@
     <a href="#" class="nav-item" onclick="alert('Settings only configurable on home page.'); return false;" aria-label="Settings">Settings</a>
     <a href="#" class="nav-item" onclick="alert('Menu only available on home page.'); return false;" aria-label="Menu">Menu</a>
   </nav>
+  <div style="max-width: 960px; margin: 20px auto;">
+  <p style="color:#FFA500; font-size: 1rem;">
+    If this is your first time or you encounter CORS issues, please request access to the CORS demo server by clicking the button below.
+  </p>
+  <button id="requestAccessBtn" style="background-color:#FFA500; color:#000; padding:10px 20px; border:none; border-radius:8px; cursor:pointer;">
+    Request CORS Access
+  </button>
+</div>
 
 <script>
+  document.getElementById('requestAccessBtn').addEventListener('click', function() {
+    window.open('https://cors-anywhere.herokuapp.com/corsdemo', '_blank');
+  });
+
   // Games + launching script
   const games = [
     { name: "Crazy Cars", url: "https://raw.githubusercontent.com/CoolDude2349/Offline-HTML-Games-Pack/master/offline/crazycars.html" },
