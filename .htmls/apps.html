@@ -109,7 +109,7 @@
   <h1>Pixel Playground Apps</h1>
 
   <div class="text-box">
-    <h2>Some of these apps are made by Chez. ALL APPS OPEN IN ABOUT:BLANK!</h2>
+    <h2>Some of these apps are made by Chez. ALL APPS OPEN IN ABOUT:BLANK! f you cant scroll, Zoom out (Ctrl +/-), Restart comp or click THIS TEXT to fix.</h2>
     <h2>IMPORTANT</h2>
     <p>If this is your first time or you encounter CORS issues, please request access to the CORS demo server by clicking the button below.</p>
     <button id="requestAccessBtn">Request CORS Access</button>
@@ -165,7 +165,7 @@
 
 const games = [
   { name: "Hacker-Style Clock (Chez)", url: "https://raw.githubusercontent.com/Chezzz37/Html-Game-Overhaul/refs/heads/main/Apps/hackerstyleclock.html" },
-  { name: "Mini-Beat Maker (Chez, ZOOM OUT TO 80%)", url: "https://raw.githubusercontent.com/Chezzz37/Html-Game-Overhaul/refs/heads/main/Apps/minibeatmaker.html" },
+  { name: "Mini-Beat Maker (Chez)", url: "https://raw.githubusercontent.com/Chezzz37/Html-Game-Overhaul/refs/heads/main/Apps/minibeatmaker.html" },
   { name: "Hacker-Style Clock (Chez)", url: "https://raw.githubusercontent.com/Chezzz37/Html-Game-Overhaul/refs/heads/main/Apps/hackerstyleclock.html" },
   { name: "Hacker-Style Clock (Chez)", url: "https://raw.githubusercontent.com/Chezzz37/Html-Game-Overhaul/refs/heads/main/Apps/hackerstyleclock.html" },
   { name: "Hacker-Style Clock (Chez)", url: "https://raw.githubusercontent.com/Chezzz37/Html-Game-Overhaul/refs/heads/main/Apps/hackerstyleclock.html" },
@@ -186,7 +186,7 @@ const games = [
             win.document.write(xhr.responseText);
             win.document.close();
             win.document.body.style.margin = '0';
-            win.document.body.style.overflow = 'hidden';
+            win.document.body.style.overflow = 'auto';
           } else {
             alert('Please allow pop-ups for this site to launch the game.');
           }
