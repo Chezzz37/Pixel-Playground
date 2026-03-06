@@ -17,39 +17,6 @@
       transition: color 0.3s, background-color 0.3s;
       user-select: none;
     }
-     #buttonsContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 5px; /* Reduced gap */
-    max-width: 960px;
-    margin: 60px auto 20px;
-    justify-items: center;
-  }
-  #buttonsContainer button {
-    width: 150px;
-    height: 150px;
-    background-color: #FFA500;
-    border: 2px solid #FFA500;
-    border-radius: 8px;
-    color: #000;
-    font-family: inherit;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: 1.2;
-    user-select: none;
-    padding: 10px;
-  }
-    h1 {
-      padding: 16px 0;
-      margin: 0;
-      font-size: 2rem;
-      color: #fff;
-    }
     #buttonsContainer {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -82,6 +49,38 @@
       border-color: #FF7F50;
       color: #000;
     }
+    h1 {
+      padding: 16px 0;
+      margin: 0;
+      font-size: 2rem;
+      color: #fff;
+    }
+    .text-box {
+      max-width: 960px;
+      margin: 20px auto 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 8px;
+      color: #fff;
+      user-select: text;
+      text-align: center;
+    }
+    .text-box button {
+      margin-top: 10px;
+      background-color: #FFA500;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+    .text-box button:hover {
+      background-color: #FF7F50;
+    }
     .bottom-nav {
       background-color: #000;
       position: fixed;
@@ -107,13 +106,15 @@
 <body>
 
   <h1>Pixel Playground Games</h1>
-  <h2>Creds to Chez for codes+persistence. ALL GAMES OPEN IN ABOUT:BLANK!</h2>
-   <h2>IMPORTANT</h2>If this is your first time or you encounter CORS issues, please request access to the CORS demo server by clicking the button below.
-  </p>
-  <button id="requestAccessBtn" style="background-color:#FFA500; color:#000; padding:10px 20px; border:none; border-radius:8px; cursor:pointer;">
-    Request CORS Access
-  </button>
-</div>
+
+  <div class="text-box">
+    <h2>Creds to Chez for codes+persistence. ALL GAMES OPEN IN ABOUT:BLANK!</h2>
+    <h2>IMPORTANT</h2>
+    <p>If this is your first time or you encounter CORS issues, please request access to the CORS demo server by clicking the button below.</p>
+    <button id="requestAccessBtn">Request CORS Access</button>
+    <p>Ctrl + F To search for games also!</p>
+  </div>
+
   <div id="buttonsContainer" aria-label="Games Buttons Container"></div>
 
   <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
@@ -121,56 +122,117 @@
     <a href="#" class="nav-item" onclick="alert('Settings only configurable on home page.'); return false;" aria-label="Settings">Settings</a>
     <a href="#" class="nav-item" onclick="alert('Menu only available on home page.'); return false;" aria-label="Menu">Menu</a>
   </nav>
-  <div style="max-width: 960px; margin: 20px auto;">
-  <p style="color:#FFA500; font-size: 1rem;">
-  
 
 <script>
-  document.getElementById('requestAccessBtn').addEventListener('click', function() {
-    window.open('https://cors-anywhere.herokuapp.com/corsdemo', '_blank');
-  });
+  // Load appearance settings from localStorage and apply
+  function loadAppearanceSettings() {
+    const body = document.body;
+    const font = localStorage.getItem('userFont');
+    const fontSize = localStorage.getItem('userFontSize');
+    const textColor = localStorage.getItem('userTextColor');
+    const bgImage = localStorage.getItem('userBackgroundImage');
+    const bgColor = localStorage.getItem('userBackgroundColor');
 
-  // Games + launching script
-  const games = [
-    { name: "Crazy Cars", url: "https://raw.githubusercontent.com/CoolDude2349/Offline-HTML-Games-Pack/master/offline/crazycars.html" },
-    { name: "Game 2", url: "https://raw.githubusercontent.com/user/repo/main/game.html" }
-  ];
-  const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+    if (font) body.style.fontFamily = font;
+    if (fontSize) body.style.fontSize = fontSize;
+    if (textColor) body.style.color = textColor;
+    else body.style.color = '#fff';
 
-  function launchGame(gameUrl) {
-    const proxyGameUrl = PROXY_URL + gameUrl;
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', proxyGameUrl, true);
-    xhr.onload = function () {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const win = window.open('', '_blank');
-        if (win) {
-          win.document.write(xhr.responseText);
-          win.document.close();
-          win.document.body.style.margin = '0';
-          win.document.body.style.overflow = 'hidden';
-        } else {
-          alert('Please allow pop-ups for this site to launch the game.');
-        }
+    if (bgImage) {
+      if (bgImage.trim() !== '') {
+        body.style.backgroundImage = `url('${bgImage}')`;
+        body.classList.add('background-image-mode');
+        body.style.backgroundColor = '';
       } else {
-        console.error('Failed to load game:', xhr.statusText);
-        alert('Could not load the game. Check the console for details and ensure the CORS proxy is working.');
+        body.style.backgroundImage = '';
+        body.classList.remove('background-image-mode');
+        body.style.backgroundColor = bgColor || '#000';
       }
-    };
-    xhr.onerror = function () {
-      console.error('Network error occurred.');
-      alert('A network error occurred while trying to fetch the game.');
-    };
-    xhr.send();
+    } else {
+      body.style.backgroundImage = '';
+      body.classList.remove('background-image-mode');
+      body.style.backgroundColor = bgColor || '#000';
+    }
   }
 
-  const container = document.getElementById('buttonsContainer');
-  games.forEach(game => {
-    const btn = document.createElement('button');
-    btn.textContent = game.name;
-    btn.onclick = () => launchGame(game.url);
-    container.appendChild(btn);
+  document.addEventListener('DOMContentLoaded', () => {
+    loadAppearanceSettings();
+
+    document.getElementById('requestAccessBtn').addEventListener('click', function() {
+      window.open('https://cors-anywhere.herokuapp.com/corsdemo', '_blank');
+    });
+
+const games = [
+  { name: "Crazy Cars", url: "https://raw.githubusercontent.com/CoolDude2349/Offline-HTML-Games-Pack/master/offline/crazycars.html" },
+  { name: "Game 2", url: "https://raw.githubusercontent.com/user/repo/main/game.html" },
+  { name: "Game 3", url: "https://example.com/game3.html" },
+  { name: "Game 4", url: "https://example.com/game4.html" },
+  { name: "Game 5", url: "https://example.com/game5.html" },
+  { name: "Game 6", url: "https://example.com/game6.html" },
+  { name: "Game 7", url: "https://example.com/game7.html" },
+  { name: "Game 8", url: "https://example.com/game8.html" },
+  { name: "Game 9", url: "https://example.com/game9.html" },
+  { name: "Game 10", url: "https://example.com/game10.html" },
+  { name: "Game 11", url: "https://example.com/game11.html" },
+  { name: "Game 12", url: "https://example.com/game12.html" },
+  { name: "Game 13", url: "https://example.com/game13.html" },
+  { name: "Game 14", url: "https://example.com/game14.html" },
+  { name: "Game 15", url: "https://example.com/game15.html" },
+  { name: "Game 16", url: "https://example.com/game16.html" },
+  { name: "Game 17", url: "https://example.com/game17.html" },
+  { name: "Game 18", url: "https://example.com/game18.html" },
+  { name: "Game 19", url: "https://example.com/game19.html" },
+  { name: "Game 20", url: "https://example.com/game20.html" },
+  { name: "Game 21", url: "https://example.com/game21.html" },
+  { name: "Game 22", url: "https://example.com/game22.html" },
+  { name: "Game 23", url: "https://example.com/game23.html" },
+  { name: "Game 24", url: "https://example.com/game24.html" },
+  { name: "Game 25", url: "https://example.com/game25.html" },
+  { name: "Game 26", url: "https://example.com/game26.html" },
+  { name: "Game 27", url: "https://example.com/game27.html" },
+  { name: "Game 28", url: "https://example.com/game28.html" },
+  { name: "Game 29", url: "https://example.com/game29.html" },
+  { name: "Game 30", url: "https://example.com/game30.html" },
+];
+
+    const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+
+    function launchGame(gameUrl) {
+      const proxyGameUrl = PROXY_URL + gameUrl;
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', proxyGameUrl, true);
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const win = window.open('', '_blank');
+          if (win) {
+            win.document.write(xhr.responseText);
+            win.document.close();
+            win.document.body.style.margin = '0';
+            win.document.body.style.overflow = 'hidden';
+          } else {
+            alert('Please allow pop-ups for this site to launch the game.');
+          }
+        } else {
+          console.error('Failed to load game:', xhr.statusText);
+          alert('Could not load the game. Check the console for details and ensure the CORS proxy is working.');
+        }
+      };
+      xhr.onerror = function () {
+        console.error('Network error occurred.');
+        alert('A network error occurred while trying to fetch the game.');
+      };
+      xhr.send();
+    }
+
+    const container = document.getElementById('buttonsContainer');
+    games.forEach(game => {
+      const btn = document.createElement('button');
+      btn.textContent = game.name;
+      btn.onclick = () => launchGame(game.url);
+      container.appendChild(btn);
+    });
   });
 </script>
+
 </body>
 </html>
